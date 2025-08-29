@@ -3,6 +3,7 @@
 import styles from "./CrosswordPuzzle.module.css";
 import { CrosswordLayout } from "@/models/Crossword";
 import { useEffect, useRef, useState } from "react";
+import Cell from "../Crossword/Cell/Cell";
 
 
 export default function CrosswordPuzzle(){
@@ -33,9 +34,6 @@ export default function CrosswordPuzzle(){
         Math.min(puzzle.current.offsetWidth / numCols, puzzle.current.offsetHeight / numRows)
     ) : 1;
 
-    /** chat says most font' letters fit in 70-80% of a pixel */
-    const fontSize = cellSize * 0.75;
-
     return (
         <>
             <div className={styles.header}>
@@ -62,16 +60,11 @@ export default function CrosswordPuzzle(){
                     >
                         { layout && layout.table.map((row) => (
                             row.map((cell, cellIndex) => (
-                                <input 
+                                <Cell 
                                     key={cellIndex} 
-                                    className={`${styles.cell} ${cell == "-" ? styles.cell_filled : ""}`}
-                                    style={{
-                                        width: `${cellSize}px`,
-                                        height: `${cellSize}px`,
-                                        fontSize: `${fontSize}px`,
-                                    }}
-                                    defaultValue={cell == "-" ? "" : cell.toUpperCase()}
-                                    disabled={cell == "-"}
+                                    size={cellSize}
+                                    answer={cell}
+                                    onChange={(value)=>console.log(value)}
                                 />
                             ))
                         ))}
