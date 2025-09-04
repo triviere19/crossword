@@ -306,7 +306,7 @@ export default function CrosswordPuzzle(){
             
                 <div className={styles.clues}>
                     <div className={styles.clues}>
-                        <h4>{`ACROSS`}</h4>
+                        <h4 className={styles.clues_title}>{`ACROSS`}</h4>
                         {/* <div className={styles.divider}/> */}
                         { layout?.words.filter(clue => clue.orientation == "across").map((clue, i) => (
                             <Word number={clue.position} clue={clue.clue} highlighted={clue.id == focusedWordId} key={i}/>
@@ -314,7 +314,7 @@ export default function CrosswordPuzzle(){
                     </div>
                     <div className={styles.divider}/>
                     <div className={styles.clues}>
-                        <h4>{`DOWN`}</h4>
+                        <h4 className={styles.clues_title}>{`DOWN`}</h4>
                         {/* <div className={styles.divider}/> */}
                         { layout?.words.filter(clue => clue.orientation == "down").map((clue, i) => (
                             <Word number={clue.position} clue={clue.clue} highlighted={clue.id == focusedWordId} key={i}/>
