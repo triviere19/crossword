@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { CrosswordCell, CrosswordLayout } from "@/models/Crossword";
 import { v4 } from "uuid";
 import { printGrid } from "@/utils/print";
-import puzzle from "@/data/clues/hockey-clues-1.json";
+// import puzzle from "@/data/clues/hockey-clues-1.json";
+import puzzle from "@/data/clues/composer-test-1.json";
 
 export interface GetCrosswordResult {
     layout: CrosswordLayout,
