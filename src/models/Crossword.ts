@@ -1,20 +1,4 @@
-// ===================================================================================
-// FROM crossword-layout-generator
-
-export type ClgCrosswordGrid = string[][]; // 2D array of letters
-export interface ClgCrosswordWordLayout {
-  clue: string,
-  answer: string,
-  startx: number,                 // starting column
-  starty: number,                 // starting row
-  orientation: "across" | "down",
-  position: number,
-}
-
-export interface ClgCrosswordLayout {
-  table: ClgCrosswordGrid,           // 2D letter array
-  result: ClgCrosswordWordLayout[],  // positioned words
-}
+import { CrosswordWordLayout as ClgCrosswordWordLayout } from "crossword-layout-generator";
 
 // ===================================================================================
 // My Crossword Interface

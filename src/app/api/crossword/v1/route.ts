@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
-import { createRequire } from "module";
 import { readFileSync } from "fs";
-import { ClgCrosswordLayout, CrosswordCell, CrosswordLayout } from "@/models/Crossword";
+import { CrosswordCell, CrosswordLayout } from "@/models/Crossword";
 import { v4 } from "uuid";
 import { printGrid } from "@/utils/print";
-const require = createRequire(import.meta.url);
-const clg = require("crossword-layout-generator");
 
 export interface GetCrosswordResult {
     layout: CrosswordLayout,
@@ -17,6 +14,8 @@ export async function GET(request: Request) {
 
     try {
 
+        const clg = (await import("crossword-layout-generator")).default;
+
         /** @todo take parameters for generating the clues */
     
         /** @todo implement chat gpt api to generate list of clues given a prompt */
@@ -27,7 +26,7 @@ export async function GET(request: Request) {
         if(data.clues){
     
             /** Use crossword-layout-generator to generate puzzle given list of clues */
-            const layout: ClgCrosswordLayout = clg.generateLayout(data.clues);
+            const layout = clg.generateLayout(data.clues);
 
             /** Generate ids for each word */
             const words = layout.result.map((word) => ({
