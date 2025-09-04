@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { readFileSync } from "fs";
 import { CrosswordCell, CrosswordLayout } from "@/models/Crossword";
 import { v4 } from "uuid";
 import { printGrid } from "@/utils/print";
+import puzzle from "@/data/clues/hockey-clues-1.json";
 
 export interface GetCrosswordResult {
     layout: CrosswordLayout,
@@ -20,8 +20,7 @@ export async function GET(request: Request) {
     
         /** @todo implement chat gpt api to generate list of clues given a prompt */
         /** for now, grab pregenerated list from json file */
-        const file = readFileSync("public/clues/hockey-clues-1.json", "utf-8");
-        const data = JSON.parse(file);
+        const data = puzzle;
         
         if(data.clues){
     

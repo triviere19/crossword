@@ -15,5 +15,5 @@ declare module "crossword-layout-generator" {
         result: CrosswordWordLayout[],  // positioned words
     }
 
-    export function generateLayout(words: string[]): CrosswordLayout;
+    export function generateLayout(clues: { clue: string, answer: string }[]): CrosswordLayout;
 }
