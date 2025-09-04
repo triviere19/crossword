@@ -5,6 +5,7 @@ import { CrosswordCell, CrosswordCellPlay, CrosswordCellState, CrosswordLayout, 
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import Cell from "../Crossword/Cell/Cell";
 import { GetCrosswordResult } from "@/app/api/crossword/v1/route";
+import Word from "../Crossword/Word/Word";
 
 
 export default function CrosswordPuzzle(){
@@ -218,11 +219,13 @@ export default function CrosswordPuzzle(){
             /** @todo */
             return;
         } else if (event.key == "ArrowUp" || event.key == "ArrowDown") {
+            event.preventDefault();
             if(focusDirection == "across"){
                 setFocusDirection("down");
                 return;
             }
         } else if (event.key == "ArrowLeft" || event.key == "ArrowRight") {
+            event.preventDefault();
             if(focusDirection == "down"){
                 setFocusDirection("across");
                 return;
@@ -306,9 +309,7 @@ export default function CrosswordPuzzle(){
                         <h4>{`ACROSS`}</h4>
                         {/* <div className={styles.divider}/> */}
                         { layout?.words.filter(clue => clue.orientation == "across").map((clue, i) => (
-                            <div className={styles.clue} key={i}>
-                                <p>{`${clue.position}. ${clue.clue}`}</p>
-                            </div>
+                            <Word number={clue.position} clue={clue.clue} highlighted={clue.id == focusedWordId} key={i}/>
                         ))}
                     </div>
                     <div className={styles.divider}/>
@@ -316,9 +317,7 @@ export default function CrosswordPuzzle(){
                         <h4>{`DOWN`}</h4>
                         {/* <div className={styles.divider}/> */}
                         { layout?.words.filter(clue => clue.orientation == "down").map((clue, i) => (
-                            <div className={styles.clue} key={i}>
-                                <p>{`${clue.position}. ${clue.clue}`}</p>
-                            </div>
+                            <Word number={clue.position} clue={clue.clue} highlighted={clue.id == focusedWordId} key={i}/>
                         ))}
                     </div>
                 </div>

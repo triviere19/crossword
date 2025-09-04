@@ -1,0 +1,21 @@
+
+.clue {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 0rem 0.5rem;
+    transition: all 200ms ease-in-out;
+}
+
+.highlighted {
+    background-color: rgb(255, 231, 93);
+    color: black;
+}
+
+.disabled {
+    opacity: 0.4;
+}
+
+.number {
+    font-weight: bold;
+}
