@@ -3,6 +3,7 @@ import { createRequire } from "module";
 import { readFileSync } from "fs";
 import { ClgCrosswordLayout, CrosswordCell, CrosswordLayout } from "@/models/Crossword";
 import { v4 } from "uuid";
+import { printGrid } from "@/utils/print";
 const require = createRequire(import.meta.url);
 const clg = require("crossword-layout-generator");
 
@@ -75,8 +76,6 @@ export async function GET(request: Request) {
             console.debug("Crossword generated successfully :)");
 
             printGrid(translated.grid);
-            // console.debug(translated);
-            // console.debug(JSON.stringify(translated));
     
             return NextResponse.json({layout: translated});
     
@@ -101,17 +100,3 @@ export async function POST(request: Request) {
 }
 
 
-export const printGrid = (grid: CrosswordCell[][]) => {
-    for(let y = 0; y < grid.length; y++){
-        let row = "|";
-        let borderRow = "+";
-        for(let x = 0; x < grid[y].length; x++){
-            const letter = grid[y][x].answer.toUpperCase();
-            row += (letter == "-" ? (`   |`) : (` ${letter} |`));
-            borderRow += "---+";
-        }
-        if(y == 0) console.log(borderRow);
-        console.log(row);
-        console.log(borderRow);
-    }
-}
