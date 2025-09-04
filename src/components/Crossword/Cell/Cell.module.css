@@ -6,6 +6,7 @@
     color: black;
     text-align: center;
     border: 1pt solid rgba(0, 0, 0, 0.2);
+    transition: background-color 200ms ease-in-out;
 }
 
 .cell:focus {
@@ -14,4 +15,26 @@
 
 .cell_filled {
     background-color: black;
+}
+
+.normal {
+    color: black;
+}
+
+.correct {
+    color: blue;
+}
+
+.incorrect {
+    color: red;
+    /* background-color: #ffbbbb; */
+}
+
+.inactive {
+    color: black;
+    background-color: black;
+}
+
+.highlighted {
+    background-color: rgb(255, 231, 93);
 }
