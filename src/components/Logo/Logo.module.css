@@ -1,0 +1,20 @@
+.container {
+    display: grid;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border: 1pt solid rgba(0, 0, 0, 0.2);
+    transition: all 200ms ease-in-out;
+    user-select: none;
+}
+
+.cell_filled {
+    background-color: black;
+    color: white;
+}

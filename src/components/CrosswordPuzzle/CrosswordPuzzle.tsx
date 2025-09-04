@@ -6,6 +6,7 @@ import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import Cell from "../Crossword/Cell/Cell";
 import { GetCrosswordResult } from "@/app/api/crossword/v1/route";
 import Word from "../Crossword/Word/Word";
+import Logo from "../Logo/Logo";
 
 
 export default function CrosswordPuzzle(){
@@ -255,8 +256,8 @@ export default function CrosswordPuzzle(){
 
             <div className={styles.header}>
                 <div className={styles.header_title}>
-                    <p>tyriviere.com</p>
-                    <h2>CROSSWORD</h2>
+                    <p className={styles.header_title_text}>t y r i v i e r e . c o m</p>
+                    <Logo height={30}/>
                 </div>
                 <div className={styles.header_buttons}>
                     <button className={styles.button} onClick={handleCheckPuzzle}>CHECK</button>

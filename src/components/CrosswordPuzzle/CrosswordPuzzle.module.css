@@ -19,6 +19,10 @@
     gap: 0.5rem;
 }
 
+.header_title_text {
+    padding-left: 0.5rem;
+}
+
 .header_buttons {
     display: flex;
     gap: 1rem;
