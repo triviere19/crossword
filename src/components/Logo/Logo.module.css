@@ -18,3 +18,15 @@
     background-color: black;
     color: white;
 }
+
+.cell:hover {
+    background-color: black;
+    color: white;
+    transform: scaleY(-1);
+}
+
+.cell_filled:hover {
+    background-color: white;
+    color: black;
+    transform: scaleY(-1);
+}
