@@ -1,3 +1,7 @@
+.container {
+    position: relative;
+}
+
 .cell {
     display: flex;
     justify-content: center;
@@ -39,4 +43,13 @@
 
 .highlighted {
     background-color: rgb(255, 231, 93);
+}
+
+.number {
+    position: absolute;
+    color: black;
+    top: 0;
+    left: 5%;
+    user-select: none;
+    pointer-events: none;
 }
