@@ -28,11 +28,11 @@
 }
 
 .correct {
-    color: blue;
+    color: rgb(74, 99, 208);
 }
 
 .incorrect {
-    color: red;
+    color: rgb(240, 86, 86);
     /* background-color: #ffbbbb; */
 }
 
