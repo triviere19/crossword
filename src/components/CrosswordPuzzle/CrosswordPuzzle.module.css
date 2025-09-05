@@ -25,13 +25,25 @@
 
 .header_buttons {
     display: flex;
-    gap: 1rem;
+    align-items: stretch;
+    border: black 1pt solid;
 }
 
 .button {
     padding: 0.5rem 1rem;
     border-radius: 0;
-    border: none;
+    border: black 1pt solid;
+}
+
+.timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+    font-weight: bold;
+    border: black 1pt solid;
+    user-select: none;
 }
 
 .container {

@@ -7,7 +7,8 @@ import Cell from "../Crossword/Cell/Cell";
 import { GetCrosswordResult } from "@/app/api/crossword/v1/route";
 import Word from "../Crossword/Word/Word";
 import Logo from "../Logo/Logo";
-
+import TimerIcon from '@mui/icons-material/Timer';
+import CheckButton from "../CheckButton/CheckButton";
 
 export default function CrosswordPuzzle(){
     
@@ -75,20 +76,31 @@ export default function CrosswordPuzzle(){
         }))));
     }
 
+    const [timer, setTimer] = useState(`:00`);
+    useEffect(() => {
+        if(layout){
+            let solved = false; //temp
+            let initTime = new Date();
+            const tick = () => {
+                const totalS = Math.round((new Date().getTime() - initTime.getTime())/1000);
+                const seconds = totalS % 60;
+                const minutes = (Math.round(seconds / 60)) % 60;
+                const hours = (Math.round(minutes / 60)) % 24;
+                const days = (Math.round(hours / 24));
+                let timeString = "";
+                timeString += days ? `${days.toString().padStart(2,'0')}:` : ``;
+                timeString += hours ? days ? `${hours.toString().padStart(2,'0')}:` : `${hours.toString()}:` : ``;
+                timeString += minutes ? hours ? `${minutes.toString().padStart(2,'0')}` : `${minutes.toString()}` : ``;
+                timeString += `:${seconds.toString().padStart(2,'0')}`;
+                setTimer(timeString);
+                if(!solved) setTimeout(tick, 1000);
+            }
+            setTimeout(tick, 1000);
+        }
+    }, [layout]);
+
     // ======================================================================================
     // STATE MANAGEMENT
-
-    const updateCellState = (x: number, y:number, state: CrosswordCellState) => {
-        setPlay(play.map((row, pY) => (row.map((cell, pX) => (
-            (x == pX && y == pY) ? 
-            ({
-                guess: cell.guess,
-                state: state,
-            }) 
-            : 
-            (cell)
-        )))));
-    }
 
     const updateCellGuess = (x: number, y:number, value: string) => {
         setPlay(play.map((row, pY) => (row.map((cell, pX) => (
@@ -313,7 +325,8 @@ export default function CrosswordPuzzle(){
                     <Logo height={30}/>
                 </div>
                 <div className={styles.header_buttons}>
-                    <button className={styles.button} onClick={handleCheckPuzzle}>CHECK</button>
+                    <div className={styles.timer}><TimerIcon/>{timer}</div>
+                    <CheckButton className={styles.button} onClick={handleCheckPuzzle}/>
                 </div>
             </div>
 
