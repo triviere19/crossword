@@ -83,10 +83,11 @@ export default function CrosswordPuzzle(){
             let initTime = new Date();
             const tick = () => {
                 const totalS = Math.round((new Date().getTime() - initTime.getTime())/1000);
+                console.log(totalS)
                 const seconds = totalS % 60;
-                const minutes = (Math.round(seconds / 60)) % 60;
-                const hours = (Math.round(minutes / 60)) % 24;
-                const days = (Math.round(hours / 24));
+                const minutes = (Math.floor(totalS / 60)) % 60;
+                const hours = (Math.floor(totalS / 60 / 60)) % 24;
+                const days = (Math.floor(hours / 60 / 60 / 24));
                 let timeString = "";
                 timeString += days ? `${days.toString().padStart(2,'0')}:` : ``;
                 timeString += hours ? days ? `${hours.toString().padStart(2,'0')}:` : `${hours.toString()}:` : ``;
