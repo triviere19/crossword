@@ -2,7 +2,7 @@
 
 import styles from "./CrosswordPuzzle.module.css";
 import { CrosswordCell, CrosswordCellPlay, CrosswordCellState, CrosswordLayout, CrosswordWordLayout } from "@/models/Crossword";
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useEffect, useRef, useState, MouseEvent } from "react";
 import Cell from "../Crossword/Cell/Cell";
 import { GetCrosswordResult } from "@/app/api/crossword/v1/route";
 import Word from "../Crossword/Word/Word";
@@ -100,8 +100,8 @@ export default function CrosswordPuzzle(){
             : 
             (cell)
         )))));
-
         /** @todo check that puzzle is complete */
+
     }
 
     // ======================================================================================
@@ -143,15 +143,18 @@ export default function CrosswordPuzzle(){
     }
     
     /** @note need to use onClick in case cell is already focused */
-    const handleCellClick = (cell: CrosswordCell) => {
-        // if(focusedCell?.x == cell.x && focusedCell.y == cell.y){
-        //     if(focusDirection == "across" && cell.downWordId){
-        //         setFocusDirection("down");
-        //     } else if (focusDirection == "down" && cell.acrossWordId){
-        //         setFocusDirection("across");
-        //     }
-        //     setFocusedCell(cell);
-        // }
+    const handleCellClick = (event: MouseEvent, cell: CrosswordCell) => {
+        event.preventDefault();
+        if(focusedCell?.x == cell.x && focusedCell.y == cell.y){
+            if(focusDirection == "across" && cell.downWordId){
+                setFocusDirection("down");
+            } else if (focusDirection == "down" && cell.acrossWordId){
+                setFocusDirection("across");
+            }
+            setFocusedCell(cell);
+        } else {
+            focusCellWithCoords(cell.x, cell.y);
+        }
     }
 
     interface BasicCell {
@@ -206,6 +209,27 @@ export default function CrosswordPuzzle(){
         return lookNext(direction, ogX, ogY);
     }
 
+
+    const focusCellWithCoords = (x: number | undefined, y: number | undefined) => {
+        if(layout && focusedCell && x != undefined && y != undefined){
+            const rows = layout.grid.length;
+            const cols = layout.grid[0].length;
+            if(x < 0 || x >= cols){
+                return false;
+            }
+            if(y < 0 || y >= rows){
+                return false;
+            }
+            if(layout.grid[y][x].answer == "-"){
+                return false;
+            }
+            const cell = document.getElementById(`cell(${x},${y})`)
+            cell?.focus();
+            return Boolean(cell);
+        }
+    }
+
+
     const handleCellKeyDown = (event: KeyboardEvent) => {
         console.debug(event.key);
         let next: BasicCell | undefined = undefined;
@@ -217,25 +241,54 @@ export default function CrosswordPuzzle(){
             // }
             return;
         } else if (event.key == "Backspace") {
-            /** @todo */
+            event.preventDefault();
+            if(focusedCell){
+                updateCellGuess(focusedCell.x, focusedCell.y, "");
+                if(focusDirection == "across"){
+                    focusCellWithCoords(focusedCell.x-1, focusedCell.y);
+                } else if (focusDirection == "down"){
+                    focusCellWithCoords(focusedCell.x, focusedCell.y-1);
+                }
+            }
             return;
         } else if (event.key == "ArrowUp" || event.key == "ArrowDown") {
             event.preventDefault();
-            if(focusDirection == "across"){
+            if(focusDirection == "across" && focusedCell?.downWordId){
                 setFocusDirection("down");
                 return;
+            } else if (focusedCell){
+                if(event.key == "ArrowUp"){
+                    focusCellWithCoords(focusedCell.x, focusedCell.y-1);
+                    return;
+                } else if (event.key == "ArrowDown") {
+                    focusCellWithCoords(focusedCell.x, focusedCell.y+1);
+                    return;
+                }
             }
         } else if (event.key == "ArrowLeft" || event.key == "ArrowRight") {
             event.preventDefault();
-            if(focusDirection == "down"){
+            if(focusDirection == "down" && focusedCell?.acrossWordId){
                 setFocusDirection("across");
                 return;
+            } else if (focusedCell){
+                if(event.key == "ArrowLeft"){
+                    focusCellWithCoords(focusedCell.x-1, focusedCell.y);
+                    return;
+                } else if (event.key == "ArrowRight") {
+                    focusCellWithCoords(focusedCell.x+1, focusedCell.y);
+                    return;
+                }
             }
-        } else {
-            /** @todo */
-            // if(focusedCell){
-            //     next = findNextCellToFocus(focusDirection, focusedCell.x, focusedCell.y);
-            // }
+        } else if (/^[a-zA-Z]$/.test(event.key)){
+            event.preventDefault();
+            if(focusedCell){
+                updateCellGuess(focusedCell.x, focusedCell.y, event.key.toUpperCase());
+                if(focusDirection == "across"){
+                    focusCellWithCoords(focusedCell.x+1, focusedCell.y);
+                } else if (focusDirection == "down"){
+                    focusCellWithCoords(focusedCell.x, focusedCell.y+1);
+                }
+            }
             return;
         }
         // if(next){
@@ -281,9 +334,19 @@ export default function CrosswordPuzzle(){
                     >
                         { layout && layout.grid.map((row, y) => (
                             row.map((cell, x) => {
+
+                                // find number if applicable 
+                                let number = undefined;
+                                layout.words.filter(word => word.id == cell.acrossWordId || word.id == cell.downWordId).forEach((word) => {
+                                    if(x == word.startx && y == word.starty){
+                                        number = word.position;
+                                    }
+                                });
+
                                 return (
                                     <Cell 
                                         key={`${x}-${y}`} 
+                                        id={`cell(${x},${y})`}
                                         size={cellSize}
                                         // value={cell}
                                         value={play[y][x].guess}
@@ -292,9 +355,10 @@ export default function CrosswordPuzzle(){
                                         onChange={(value)=>updateCellGuess(x, y, value)}
                                         highlighted={Boolean(focusedWordId) && (cell.acrossWordId == focusedWordId || cell.downWordId == focusedWordId)}
                                         onFocus={()=>handleCellFocus(cell)}
-                                        onClick={()=>handleCellClick(cell)}
+                                        onClick={(e)=>handleCellClick(e, cell)}
                                         onBlur={handleCellBlur}
                                         onKeyDown={handleCellKeyDown}
+                                        number={number}
                                     />
                                 );
                             })
