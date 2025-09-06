@@ -9,6 +9,8 @@ import Word from "../Crossword/Word/Word";
 import Logo from "../Logo/Logo";
 import TimerIcon from '@mui/icons-material/Timer';
 import CheckButton from "../CheckButton/CheckButton";
+import PuzzleSolvedModal from "../Crossword/PuzzleSolvedModal/PuzzleSolvedModal";
+import { formatTimer } from "@/utils/time";
 
 export default function CrosswordPuzzle(){
     
@@ -76,27 +78,18 @@ export default function CrosswordPuzzle(){
         }))));
     }
 
-    const [timer, setTimer] = useState(`:00`);
+    const [timer, setTimer] = useState(0);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout>|null>(null);
+
     useEffect(() => {
-        if(layout){
-            let solved = false; //temp
+        if(layout && !timeoutRef.current){
             let initTime = new Date();
             const tick = () => {
-                const totalS = Math.round((new Date().getTime() - initTime.getTime())/1000);
-                console.log(totalS)
-                const seconds = totalS % 60;
-                const minutes = (Math.floor(totalS / 60)) % 60;
-                const hours = (Math.floor(totalS / 60 / 60)) % 24;
-                const days = (Math.floor(hours / 60 / 60 / 24));
-                let timeString = "";
-                timeString += days ? `${days.toString().padStart(2,'0')}:` : ``;
-                timeString += hours ? days ? `${hours.toString().padStart(2,'0')}:` : `${hours.toString()}:` : ``;
-                timeString += minutes ? hours ? `${minutes.toString().padStart(2,'0')}` : `${minutes.toString()}` : ``;
-                timeString += `:${seconds.toString().padStart(2,'0')}`;
-                setTimer(timeString);
-                if(!solved) setTimeout(tick, 1000);
+                const seconds = Math.round((new Date().getTime() - initTime.getTime())/1000);
+                setTimer(seconds);
+                timeoutRef.current = setTimeout(tick, 1000);
             }
-            setTimeout(tick, 1000);
+            timeoutRef.current = setTimeout(tick, 1000);
         }
     }, [layout]);
 
@@ -309,9 +302,36 @@ export default function CrosswordPuzzle(){
         //     setFocusedCell(layout?.grid[next.y][next.x]);
         // }
     }
-
+    
     // debug
     // useEffect(() => { console.log(focusedWordId) }, [focusedWordId]);
+    // ======================================================================================
+    
+    const [solved, setSolved] = useState(false);
+
+    useEffect(() => {
+        console.debug("checking puzzle...");
+        if(layout && play){
+            for(let y = 0; y < play.length; y++){
+                const row = play[y];
+                for(let x = 0; x < row.length; x++){
+                    const cell = row[x];
+                    if(layout.grid[y][x].answer == "-"){
+                        continue;
+                    } else if(cell.guess == layout.grid[y][x].answer.toUpperCase()){
+                        continue;
+                    } else {
+                        return;
+                    }
+                }
+            }
+            setSolved(true);
+        }
+    }, [layout, play]);
+
+    useEffect(() => {
+        if(solved && timeoutRef.current) clearTimeout(timeoutRef.current);
+    }, [solved]);
 
     // ======================================================================================
 
@@ -326,7 +346,7 @@ export default function CrosswordPuzzle(){
                     <Logo height={30}/>
                 </div>
                 <div className={styles.header_buttons}>
-                    <div className={styles.timer}><TimerIcon/>{timer}</div>
+                    <div className={styles.timer}><TimerIcon/>{formatTimer(timer)}</div>
                     <CheckButton className={styles.button} onClick={handleCheckPuzzle}/>
                 </div>
             </div>
@@ -400,6 +420,10 @@ export default function CrosswordPuzzle(){
                         ))}
                     </div>
                 </div>
+
+                {/* =========================================================================== */}
+
+                <PuzzleSolvedModal solved={solved} time={timer}/>
 
                 {/* =========================================================================== */}
 
