@@ -310,7 +310,6 @@ export default function CrosswordPuzzle(){
     const [solved, setSolved] = useState(false);
 
     useEffect(() => {
-        console.debug("checking puzzle...");
         if(layout && play){
             for(let y = 0; y < play.length; y++){
                 const row = play[y];
