@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { CrosswordCell, CrosswordLayout } from "@/models/Crossword";
-import { v4 } from "uuid";
+import { CrosswordLayout } from "@/models/Crossword";
 import { printCrossword, printGrid } from "@/utils/print";
-import puzzle from "@/data/clues/composer-test-1.json";
 import { composeRandomGrid, crosswordFromGrid } from "@/utils/grid";
 
 export interface GetCrosswordResult {
@@ -26,12 +24,11 @@ export async function GET(request: Request) {
         }
         console.log("Took " + (new Date().getTime() - startTime.getTime()) + "ms to generate\n");
 
-        /** Convert to grid to Crossword object */
-        
-        
+        /** Convert grid to Crossword object */
         const crossword = crosswordFromGrid(composedGrid);
-
         printCrossword(crossword.grid);
+
+        /** @todo Generate clues with AI */
 
         return NextResponse.json({layout: crossword});
     
