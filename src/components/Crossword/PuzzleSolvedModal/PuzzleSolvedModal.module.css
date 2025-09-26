@@ -1,0 +1,36 @@
+
+
+.overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    inset: 0;
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 300ms ease-in-out;
+}
+
+.modal {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #e7e7e7;
+    border: black solid 2pt;
+    color: black;
+    gap: 0.5rem;
+}
+
+.award {
+    font-size: 50pt;
+}
+
+.time_box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
