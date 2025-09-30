@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    min-width: 100px;
+    background-color: white;
+    padding: 3rem;
+    border-radius: 5px;
+    gap: 1rem;
+}
+
+.title {
+    color: black;
+    text-align: center;
+}
+
+.input_label {
+    background-color: white;
+    padding: 8px;
+}
