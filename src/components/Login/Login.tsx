@@ -6,7 +6,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export interface LoginProps {
     title?: string,
-    onLogin: () => void,
+    onLogin: (username: string, password: string) => void,
     failed?: boolean,
 }
 
@@ -44,7 +44,7 @@ export default function Login(props: LoginProps){
                     Login failed 🥸
                 </Alert>
             }
-            <Button onClick={props.onLogin}>Login</Button>
+            <Button onClick={() => props.onLogin(username, password)}>Login</Button>
         </div>
     );
 }
