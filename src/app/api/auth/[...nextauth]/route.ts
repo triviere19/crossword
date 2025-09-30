@@ -1,13 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-// middleware, protects better
-export { default } from "next-auth/middleware";
-export const config = {
-    // Only protect this specified routes
-    matcher: ["/admin/home"]
-}
-
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
