@@ -29,3 +29,20 @@ export interface CrosswordCellPlay {
 }
 
 export type CrosswordCellState = "normal" | "incorrect" | "correct" | "inactive";
+
+// ===================================================================================
+// Crossword Generator
+
+export interface CrosswordGeneratorOptions {
+  blanks: number,
+  rows: number,
+  cols: number,
+  difficulty: string,
+}
+
+export const defaultCrosswordGeneratorOptions: CrosswordGeneratorOptions = {
+  blanks: 2,
+  rows: 5,
+  cols: 5,
+  difficulty: "5th grader",
+}

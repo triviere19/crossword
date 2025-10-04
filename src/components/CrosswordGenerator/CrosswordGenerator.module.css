@@ -1,0 +1,12 @@
+.selector_container{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.button {
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+
+}
