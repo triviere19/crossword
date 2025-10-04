@@ -23,10 +23,6 @@ export const generateClue = async (word: string, difficulty: string) => {
         });
     
         const data = await response.json();
-
-        console.log(data);
-        console.log(data.choices[0].message);
-        console.log(data.choices[0].message.content);
     
         return data.choices[0].message.content;
 

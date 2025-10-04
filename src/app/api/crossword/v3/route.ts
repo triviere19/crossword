@@ -35,12 +35,11 @@ export async function GET(request: Request) {
             console.log("Randomly Composed Crossword:");
             printGrid(composedGrid);
         }
-        console.log("Took " + (new Date().getTime() - startTime.getTime()) + "ms to generate\n");
-
+        
         /** Convert grid to Crossword object */
         const crossword = crosswordFromGrid(composedGrid);
         printCrossword(crossword.grid);
-
+        
         /** Generate clues with AI */
         for(let i = 0; i < crossword.words.length; i++){
             const word = crossword.words[i];
@@ -48,7 +47,9 @@ export async function GET(request: Request) {
             console.debug(`${word.answer}: ${aiClue}`);
             word.clue = aiClue;
         }
-
+        
+        console.log("Took " + (new Date().getTime() - startTime.getTime()) + "ms to generate\n");
+        
         return NextResponse.json({layout: crossword});
     
     } catch (e) {
