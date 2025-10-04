@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 1rem;
+    width: 300px;
+}
+
+.label_container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.label {
+    font-weight: bold;
+    /* text-align: center; */
+    /* transition: 200ms; */
+}
+
+.difficulty {
+    font-weight: lighter;
+}
+
+.block {
+    display: flex;
+    flex-flow: column;
+}
+
+.pair {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.incrementor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.incrementor_button {
+    padding: 0rem 0.5rem;
+}

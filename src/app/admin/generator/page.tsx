@@ -2,19 +2,16 @@
 import { getServerSession } from "next-auth";
 import styles from "../../page.module.css";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import Logout from "@/components/Loguout/Logout";
-import Link from "next/link";
+import CrosswordGenerator from "@/components/CrosswordGenerator/CrosswordGenerator";
 
-export default async function Admin() {
+export default async function Generator() {
     
     const session = await getServerSession(authOptions);
 
     return (
         <div className={styles.page}>
             <main className={styles.main}>
-                <p>hello, {session?.user.name}</p>
-                <button><Link href={"/admin/generator"}>Generator</Link></button>
-                <Logout/>
+                <CrosswordGenerator/>
             </main>
             <footer className={styles.footer}>
                 

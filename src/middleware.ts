@@ -12,5 +12,5 @@ export default withAuth({
 });
 
 export const config = {
-    matcher: ["/admin/home"] // Only protect this specified routes
+    matcher: ["/admin/home", "/admin/generator"] // Only protect this specified routes
 }
