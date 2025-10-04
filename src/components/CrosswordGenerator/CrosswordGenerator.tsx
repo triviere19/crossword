@@ -5,7 +5,7 @@ import PuzzleSelector from "./PuzzleSelector/PuzzleSelector";
 import { CrosswordLayout, defaultCrosswordGeneratorOptions } from "@/models/Crossword";
 import CrosswordPuzzle from "../v3/CrosswordPuzzle/CrosswordPuzzle";
 import PuzzleLoading from "./PuzzleLoading/PuzzleLoading";
-import { Typography } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 import styles from "./CrosswordGenerator.module.css";
 
 export default function CrosswordGenerator(){
@@ -13,6 +13,7 @@ export default function CrosswordGenerator(){
     const [generating, setGenerating] = useState(false);
     const [generated, setGenerated] = useState(false);
     const [layout, setLayout] = useState<CrosswordLayout|undefined>(undefined);
+    const [error, setError] = useState<string|undefined>(undefined);
 
     const [options, setOptions] = useState(defaultCrosswordGeneratorOptions);
     const difficulties = [
@@ -30,24 +31,29 @@ export default function CrosswordGenerator(){
 
     const handleGenerate = async () => {
         setGenerating(true);
+        setError(undefined);
         await fetch("/api/crossword/v3", {
             headers: {
                 'rows': options.rows.toString(), 'cols': options.cols.toString(), 
                 'blanks': options.blanks.toString(), 'difficulty': options.difficulty
             },
         }).then(async (res) => {
-            setGenerating(false);
             if(res.ok){
                 const result = await res.json();
                 if(result.layout){
                     setLayout(result.layout);
                     setGenerated(true);
                 } else {
-                    console.error(`No layout!`);
+                    throw(`Could not generate crossword puzzle! No layout returned!`);
                 }
             } else {
-                console.error(`Bad response!`);
+                throw(`Could not generate crossword puzzle! (${res.status} - ${res.statusText})`);
             }
+        }).catch((e) => {
+            console.error(e);
+            setError(e);
+        }).finally(() => {
+            setGenerating(false);
         });
     }
 
@@ -63,6 +69,7 @@ export default function CrosswordGenerator(){
                         <Typography variant="h3">AI Crossword Generator</Typography>
                         <PuzzleSelector difficulties={difficulties} value={options} onChange={setOptions}/>
                         <button onClick={handleGenerate} className={styles.button}>Generate</button>
+                        { error && <Alert>{error}</Alert>}
                     </div>
             }
         </>
