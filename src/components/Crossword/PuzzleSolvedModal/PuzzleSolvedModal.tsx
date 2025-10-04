@@ -1,14 +1,16 @@
 import styles from "./PuzzleSolvedModal.module.css";
 import { formatTimer } from "@/utils/time";
 import TimerIcon from '@mui/icons-material/Timer';
+import { ReactNode } from "react";
 
 
 export interface PuzzleSolvedModalProps {
     solved: boolean,
     time: number,
+    children?: ReactNode,
 }
 
-export default function PuzzleSolvedModal(props: PuzzleSolvedModalProps){
+export default function PuzzleSolvedModal({children, ...props}: PuzzleSolvedModalProps){
 
     const getAward = (seconds: number) => {
         if(seconds == 0) return "";
@@ -51,6 +53,7 @@ export default function PuzzleSolvedModal(props: PuzzleSolvedModalProps){
                     <TimerIcon/>
                     <h3>{formatTimer(props.time)}</h3>
                 </div>
+                {children}
             </div>
         </div>
     );

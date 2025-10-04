@@ -10,6 +10,8 @@ import TimerIcon from '@mui/icons-material/Timer';
 import CheckButton from "../../CheckButton/CheckButton";
 import PuzzleSolvedModal from "../../Crossword/PuzzleSolvedModal/PuzzleSolvedModal";
 import { formatTimer } from "@/utils/time";
+import { Button } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export interface CrosswordPuzzleProps{
     layout: CrosswordLayout|undefined,
@@ -416,7 +418,9 @@ export default function CrosswordPuzzle(props: CrosswordPuzzleProps){
 
                 {/* =========================================================================== */}
 
-                <PuzzleSolvedModal solved={solved} time={timer}/>
+                <PuzzleSolvedModal solved={solved} time={timer}>
+                    <Button onClick={()=>window.location.reload()}>New Puzzle</Button>
+                </PuzzleSolvedModal>
 
                 {/* =========================================================================== */}
 

@@ -26,9 +26,9 @@ export default function PuzzleSelector(props: PuzzleSelectorProps){
 
     return (
         <div className={styles.container}>
-            <Incrementor value={blanks} onChange={setBlanks} label={"Blank Spaces:"}/>
-            <Incrementor value={rows} onChange={setRows} label={"Rows:"}/>
-            <Incrementor value={cols} onChange={setCols} label={"Cols:"}/>
+            <Incrementor value={blanks} onChange={setBlanks} label={"Blank Spaces:"} min={0}/>
+            <Incrementor value={rows} onChange={setRows} label={"Rows:"} min={1} max={8}/>
+            <Incrementor value={cols} onChange={setCols} label={"Cols:"} min={1} max={8}/>
             <div className={styles.block}>
                 <div className={styles.label_container}>
                     <Typography className={styles.label}>{"Difficulty:"}</Typography>
@@ -51,17 +51,34 @@ export interface IncrementorProps {
     label: string,
     value: number,
     onChange: (set: number) => void,
+    min?: number,
+    max?: number,
 }
 
 export function Incrementor(props: IncrementorProps){
+
+    const min = props.min != undefined ? props.min : 0;
+    const max = props.max != undefined ? props.max : 10;
+
+    const handleIncrement = () => {
+        if(props.value < max){
+            props.onChange(props.value+1);
+        }
+    }
+
+    const handleDecrement = () => {
+        if(props.value > min){
+            props.onChange(props.value-1);
+        }
+    }
 
     return (
         <div className={styles.pair}>
             <Typography>{props.label}</Typography>
             <div className={styles.incrementor}>
-                <button className={styles.incrementor_button} onClick={()=>props.onChange(props.value-1)}>-</button>
+                <button className={styles.incrementor_button} onClick={handleDecrement}>-</button>
                 <Typography>{props.value}</Typography>
-                <button className={styles.incrementor_button} onClick={()=>props.onChange(props.value+1)}>+</button>
+                <button className={styles.incrementor_button} onClick={handleIncrement}>+</button>
             </div>
         </div>
     );

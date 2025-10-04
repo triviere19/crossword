@@ -23,6 +23,7 @@
     border: black solid 2pt;
     color: black;
     gap: 0.5rem;
+    min-width: 300px;
 }
 
 .award {

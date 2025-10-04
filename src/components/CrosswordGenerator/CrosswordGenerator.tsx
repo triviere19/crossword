@@ -30,7 +30,12 @@ export default function CrosswordGenerator(){
 
     const handleGenerate = async () => {
         setGenerating(true);
-        await fetch("/api/crossword/v3").then(async (res) => {
+        await fetch("/api/crossword/v3", {
+            headers: {
+                'rows': options.rows.toString(), 'cols': options.cols.toString(), 
+                'blanks': options.blanks.toString(), 'difficulty': options.difficulty
+            },
+        }).then(async (res) => {
             setGenerating(false);
             if(res.ok){
                 const result = await res.json();
@@ -57,7 +62,7 @@ export default function CrosswordGenerator(){
                     <div className={styles.selector_container}>  
                         <Typography variant="h3">AI Crossword Generator</Typography>
                         <PuzzleSelector difficulties={difficulties} value={options} onChange={setOptions}/>
-                        <button onClick={handleGenerate}>Generate</button>
+                        <button onClick={handleGenerate} className={styles.button}>Generate</button>
                     </div>
             }
         </>
