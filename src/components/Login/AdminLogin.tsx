@@ -41,6 +41,7 @@ export default function AdminLogin(props: AdminLoginProps){
             onLogin={onLogin}
             title={'Admin Portal'}
             failed={failed}
+            icon={"/icons/logo.svg"}
         />
     );
 }

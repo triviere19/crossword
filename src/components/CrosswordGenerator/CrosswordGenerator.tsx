@@ -1,12 +1,15 @@
 "use client"
 
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 import PuzzleSelector from "./PuzzleSelector/PuzzleSelector";
 import { CrosswordLayout, defaultCrosswordGeneratorOptions } from "@/models/Crossword";
 import CrosswordPuzzle from "../v3/CrosswordPuzzle/CrosswordPuzzle";
 import PuzzleLoading from "./PuzzleLoading/PuzzleLoading";
-import { Alert, Typography } from "@mui/material";
+import { Alert, Button, Typography } from "@mui/material";
 import styles from "./CrosswordGenerator.module.css";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function CrosswordGenerator(){
 
@@ -57,6 +60,12 @@ export default function CrosswordGenerator(){
         });
     }
 
+    const buttonStyle: CSSProperties = {
+        width: 300,
+    }
+
+    const router = useRouter();
+
     return (
         <>
             { generated ? 
@@ -65,10 +74,17 @@ export default function CrosswordGenerator(){
                 generating ? 
                     <PuzzleLoading/>
                     :
-                    <div className={styles.selector_container}>  
-                        <Typography variant="h3">AI Crossword Generator</Typography>
+                    <div className={styles.selector_container}>
+                        <Image
+                            src="/icons/logo.svg"
+                            width={100}
+                            height={100}
+                            alt="crossword.tyriviere"
+                        />
+                        <Typography variant="h3" textAlign={"center"}>AI Crossword Generator</Typography>
                         <PuzzleSelector difficulties={difficulties} value={options} onChange={setOptions}/>
-                        <button onClick={handleGenerate} className={styles.button}>Generate</button>
+                        <Button onClick={handleGenerate} sx={buttonStyle} variant="contained">Generate</Button>
+                        <Button sx={buttonStyle} variant="outlined" onClick={()=>router.push("/admin/home")}>Back</Button>
                         { error && <Alert>{error}</Alert>}
                     </div>
             }
