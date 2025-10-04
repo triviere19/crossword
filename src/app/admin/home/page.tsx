@@ -28,9 +28,6 @@ export default async function Admin() {
                     </div>
                 </div>
             </main>
-            <footer className={styles.footer}>
-                
-            </footer>
         </div>
     );
 }

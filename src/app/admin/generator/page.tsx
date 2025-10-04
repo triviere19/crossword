@@ -13,9 +13,6 @@ export default async function Generator() {
             <main className={styles.main}>
                 <CrosswordGenerator/>
             </main>
-            <footer className={styles.footer}>
-                
-            </footer>
         </div>
     );
 }
