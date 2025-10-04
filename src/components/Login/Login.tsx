@@ -3,11 +3,13 @@ import styles from "./Login.module.css";
 import { Alert, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Image from "next/image";
 
 export interface LoginProps {
     title?: string,
     onLogin: (username: string, password: string) => void,
     failed?: boolean,
+    icon?: string,
 }
 
 export default function Login(props: LoginProps){
@@ -18,6 +20,13 @@ export default function Login(props: LoginProps){
 
     return (
         <div className={styles.container}>
+            { props.icon && <Image
+                src={props.icon}
+                width={50}
+                height={50}
+                alt="crossword.tyriviere"
+                className={styles.icon}
+            />}
             <h2 className={styles.title}>{props.title || "Login"}</h2>
             <TextField 
                 value={username}
@@ -44,7 +53,7 @@ export default function Login(props: LoginProps){
                     Login failed 🥸
                 </Alert>
             }
-            <Button onClick={() => props.onLogin(username, password)}>Login</Button>
+            <Button variant={(username && password) ? "contained" : "outlined"} onClick={() => props.onLogin(username, password)}>Login</Button>
         </div>
     );
 }
