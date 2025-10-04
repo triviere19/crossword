@@ -15,7 +15,7 @@ const dialogues = [
     "giving open ai some money...",
     "getting fired up... this is gonna be a good one!",
     "nervously laughing at how bad this puzzle is coming out...",
-    "inquiring my good friend, Mr GPT...",
+    "inquiring my good friend, Mr. GPT...",
     "interrogating the dictionary...",
     "getting slightly distracted...",
     "demanding answers...",
