@@ -9,6 +9,7 @@ import { Alert, Button, Typography } from "@mui/material";
 import styles from "./CrosswordGenerator.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function CrosswordGenerator(){
 
@@ -74,6 +75,12 @@ export default function CrosswordGenerator(){
                     <PuzzleLoading/>
                     :
                     <div className={styles.selector_container}>
+                        <Image
+                            src="/icons/logo.svg"
+                            width={100}
+                            height={100}
+                            alt="crossword.tyriviere"
+                        />
                         <Typography variant="h3" textAlign={"center"}>AI Crossword Generator</Typography>
                         <PuzzleSelector difficulties={difficulties} value={options} onChange={setOptions}/>
                         <Button onClick={handleGenerate} sx={buttonStyle} variant="contained">Generate</Button>

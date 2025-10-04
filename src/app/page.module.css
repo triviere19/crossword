@@ -166,6 +166,13 @@ a.secondary {
   }
 }
 
+.center_group {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 1rem;
+}
+
 .button_group {
   width: 300px;
   display: flex;
