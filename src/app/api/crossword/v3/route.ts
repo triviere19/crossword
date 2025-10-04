@@ -4,7 +4,7 @@ import { printCrossword, printGrid } from "@/utils/print";
 import { composeRandomGrid, crosswordFromGrid } from "@/utils/grid";
 import { generateClue } from "@/utils/clues";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@/utils/auth";
 
 export interface GetCrosswordResult {
     layout: CrosswordLayout,
@@ -44,12 +44,11 @@ export async function GET(request: Request) {
         for(let i = 0; i < crossword.words.length; i++){
             const word = crossword.words[i];
             const aiClue = await generateClue(word.answer, difficulty);
-            console.debug(`${word.answer}: ${aiClue}`);
             word.clue = aiClue;
         }
         
         console.log("Took " + (new Date().getTime() - startTime.getTime()) + "ms to generate\n");
-        
+
         return NextResponse.json({layout: crossword});
     
     } catch (e) {

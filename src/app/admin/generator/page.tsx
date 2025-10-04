@@ -1,8 +1,8 @@
 
 import { getServerSession } from "next-auth";
 import styles from "../../page.module.css";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import CrosswordGenerator from "@/components/CrosswordGenerator/CrosswordGenerator";
+import { authOptions } from "@/utils/auth";
 
 export default async function Generator() {
     

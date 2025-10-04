@@ -1,9 +1,9 @@
 
 import { getServerSession } from "next-auth";
 import styles from "../../page.module.css";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Logout from "@/components/Loguout/Logout";
 import Link from "next/link";
+import { authOptions } from "@/utils/auth";
 
 export default async function Admin() {
     
