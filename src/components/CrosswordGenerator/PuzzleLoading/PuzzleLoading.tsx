@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "./PuzzleLoading.module.css";
 import { Mirage } from 'ldrs/react';
 import 'ldrs/react/Mirage.css';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const dialogues = [
     "consulting the overlords...",
@@ -38,13 +39,16 @@ export default function PuzzleLoading(){
         pickNew();
     }, []);
 
+    // get sys dark mode preference
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
     return (
         <div className={styles.container} style={{opacity: show ? 1 : 0}}>
             {<Typography style={{opacity: showText ? 1 : 0, transition: 'opacity 1000ms ease-in-out'}}>{dialogue}</Typography>}
             <Mirage
                 size="60"
                 speed="2.5"
-                color="white" 
+                color={prefersDarkMode ? "white" : "black"}
             />
         </div>
     );
