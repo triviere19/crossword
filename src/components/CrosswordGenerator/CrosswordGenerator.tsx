@@ -66,7 +66,6 @@ export default function CrosswordGenerator(){
                     <PuzzleLoading/>
                     :
                     <div className={styles.selector_container}>  
-                    <PuzzleLoading/>
                         <Typography variant="h3">AI Crossword Generator</Typography>
                         <PuzzleSelector difficulties={difficulties} value={options} onChange={setOptions}/>
                         <button onClick={handleGenerate} className={styles.button}>Generate</button>
