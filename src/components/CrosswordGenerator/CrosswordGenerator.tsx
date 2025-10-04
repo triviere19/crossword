@@ -54,7 +54,6 @@ export default function CrosswordGenerator(){
                     <PuzzleLoading/>
                     :
                     <>
-                    <PuzzleLoading/>
                         <PuzzleSelector difficulties={difficulties} value={options} onChange={setOptions}/>
                         <button onClick={handleGenerate}>Generate</button>
                     </>
