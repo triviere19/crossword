@@ -2,23 +2,28 @@
 
 import { CSSProperties, useState } from "react";
 import PuzzleSelector from "./PuzzleSelector/PuzzleSelector";
-import { CrosswordLayout, defaultCrosswordGeneratorOptions } from "@/models/Crossword";
-import CrosswordPuzzle from "../v3/CrosswordPuzzle/CrosswordPuzzle";
+import { defaultCrosswordGeneratorOptions } from "@/models/Crossword";
 import PuzzleLoading from "./PuzzleLoading/PuzzleLoading";
-import { Alert, Button, Typography } from "@mui/material";
+import { Alert, Button, Typography, useMediaQuery, useTheme } from "@mui/material";
 import styles from "./CrosswordGenerator.module.css";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useCrossword } from "@/context/CrosswordContext";
+import CrosswordMobile from "../v3/CrosswordMobile/CrosswordMobile";
+import CrosswordDesktop from "../v3/CrosswordDesktop/CrosswordDesktop";
 
 export default function CrosswordGenerator(){
 
+    const { setLayout, layout } = useCrossword();
+    const router = useRouter();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const [generating, setGenerating] = useState(false);
     const [generated, setGenerated] = useState(false);
-    const [layout, setLayout] = useState<CrosswordLayout|undefined>(undefined);
     const [error, setError] = useState<string|undefined>(undefined);
-
     const [options, setOptions] = useState(defaultCrosswordGeneratorOptions);
+    
     const difficulties = [
         "sack of potatoes",
         "2 year old",
@@ -64,12 +69,10 @@ export default function CrosswordGenerator(){
         width: 300,
     }
 
-    const router = useRouter();
-
     return (
         <>
             { generated ? 
-                <CrosswordPuzzle layout={layout}/>
+                isMobile ? <CrosswordMobile/> : <CrosswordDesktop/> 
                 :
                 generating ? 
                     <PuzzleLoading/>
