@@ -165,3 +165,11 @@ a.secondary {
     filter: invert();
   }
 }
+
+.button_group {
+  width: 300px;
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  gap: 1rem;
+}

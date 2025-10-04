@@ -4,6 +4,7 @@ import styles from "../../page.module.css";
 import Logout from "@/components/Loguout/Logout";
 import Link from "next/link";
 import { authOptions } from "@/utils/auth";
+import { Button, ButtonGroup, Typography } from "@mui/material";
 
 export default async function Admin() {
     
@@ -12,9 +13,11 @@ export default async function Admin() {
     return (
         <div className={styles.page}>
             <main className={styles.main}>
-                <p>hello, {session?.user.name}</p>
-                <button><Link href={"/admin/generator"}>Generator</Link></button>
-                <Logout/>
+                <Typography variant="h4" textAlign={"center"}>hello, {session?.user.name}</Typography>
+                <div className={styles.button_group}>
+                    <Button variant="contained"><Link href={"/admin/generator"}>Generator</Link></Button>
+                    <Logout/>
+                </div>
             </main>
             <footer className={styles.footer}>
                 

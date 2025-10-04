@@ -1,11 +1,12 @@
 "use client"
 
+import { Button } from "@mui/material";
 import { signOut } from "next-auth/react";
 
 
 export default function Logout(){
 
     return (
-        <button onClick={()=>signOut()}>Logout</button>
+        <Button onClick={()=>signOut()} variant="outlined">Logout</Button>
     );
 }

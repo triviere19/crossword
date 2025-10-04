@@ -1,8 +1,9 @@
-import { Slider, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Button, ButtonGroup, Slider, Typography } from "@mui/material";
+import { CSSProperties, useEffect, useState } from "react";
 import styles from "./PuzzleSelector.module.css";
 import { CrosswordGeneratorOptions } from "@/models/Crossword";
-
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 
 export interface PuzzleSelectorProps {
     difficulties: string[],
@@ -72,14 +73,23 @@ export function Incrementor(props: IncrementorProps){
         }
     }
 
+    const buttonStyle: CSSProperties = {
+        borderRadius: 20,
+        padding: "0.25rem",
+    }
+
     return (
         <div className={styles.pair}>
             <Typography>{props.label}</Typography>
-            <div className={styles.incrementor}>
-                <button className={styles.incrementor_button} onClick={handleDecrement}>-</button>
-                <Typography>{props.value}</Typography>
-                <button className={styles.incrementor_button} onClick={handleIncrement}>+</button>
-            </div>
+            <ButtonGroup>
+                <Button variant="contained" sx={buttonStyle} onClick={handleDecrement}>
+                    <RemoveIcon/>
+                </Button>
+                <Button variant="outlined" disableRipple>{props.value}</Button>
+                <Button variant="contained" sx={buttonStyle} onClick={handleIncrement}>
+                    <AddIcon/>
+                </Button>
+            </ButtonGroup>
         </div>
     );
 }
