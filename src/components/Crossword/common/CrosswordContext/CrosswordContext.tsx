@@ -2,7 +2,7 @@
 
 "use client"
 
-import { CrosswordCell, CrosswordCellPlay, CrosswordCellState, CrosswordLayout } from "@/models/Crossword";
+import { CrosswordCell, CrosswordCellPlay, CrosswordCellState, CrosswordLayout, CrosswordWordLayout } from "@/models/Crossword";
 import { KeyboardEvent, useEffect, useRef, useState, MouseEvent, createContext, ReactNode, useContext } from "react";
 
 export interface CrosswordContextType {
@@ -155,52 +155,6 @@ export function CrosswordProvider({children}:{children: ReactNode}){
         x: number,
         y: number,
     }
-    const findNextCellToFocus = (direction: "across" | "down", ogX: number, ogY: number): BasicCell | undefined => {
-        
-        const lookNext = (direction: "across" | "down", x: number, y: number): BasicCell | undefined => {
-            /** @warning still possibility of infinite search if all cells are filled */
-            if(layout){
-                if(direction == "across"){
-                    let newY = 0;
-                    if(x+1 >= layout.grid[y].length){
-                        newY = (y+1) % layout.grid.length;
-                    } else {
-                        newY = y % layout?.grid[y].length;
-                    }
-                    const newX = (x+1) % layout?.grid[y].length;
-                    if(layout.grid[newY][newX].answer == "-" || play[newY][newX].guess){
-                        return findNextCellToFocus("across", newX, newY);
-                    } else {
-                        return ({
-                            direction: "across",
-                            x: newX,
-                            y: newY,
-                        });
-                    }
-                } else if(direction == "down"){
-                    let newX = 0;
-                    if(y+1 >= layout.grid.length){
-                        newX = (x+1) % layout.grid[y].length;
-                    } else {
-                        newX = x % layout?.grid[y].length;
-                    }
-                    const newY = (y+1) % layout?.grid.length;
-                    if(layout.grid[newY][newX].answer == "-" || play[newY][newX].guess){
-                        return findNextCellToFocus("down", newX, newY);
-                    } else {
-                        return ({
-                            direction: "down",
-                            x: newX,
-                            y: newY,
-                        });
-                    }
-                }
-            }
-            return undefined;
-        }
-
-        return lookNext(direction, ogX, ogY);
-    }
 
 
     const focusCellWithCoords = (x: number | undefined, y: number | undefined) => {
@@ -222,16 +176,70 @@ export function CrosswordProvider({children}:{children: ReactNode}){
         }
     }
 
+    const sortedAcrossWords = layout?.words.filter(w => (w.orientation == "across")).sort((a, b) => a.position - b.position) || [];
+    const sortedDownWords = layout?.words.filter(w => (w.orientation == "down")).sort((a, b) => a.position - b.position) || [];
+
+    const focusWordByCoords = (x: number, y: number) => {
+        
+    }
+
+    
+    const focusNextWord = () => {
+        if(layout){
+            if(focusedCell){
+                const searchSortedWordList = (direction: "across" | "down", startWordIndex: number) => {
+                    const sortedWordList = direction == "across" ? sortedAcrossWords : sortedDownWords;
+                    for(let i = startWordIndex; i < sortedWordList.length; i++){
+                        const word = sortedWordList[i];
+                        for(let j = 0; j < word.answer.length; j++){
+                            const cell = word.orientation == "across" ? layout.grid[word.starty][word.startx+j] : layout.grid[word.starty+j][word.startx];
+                            if(!play[cell.x][cell.y].guess){
+                                setFocusDirection(direction);
+                                focusCellWithCoords(cell.x, cell.y);
+                                return true; 
+                            }
+                        }
+                    }
+                    return false;
+                }
+
+                const firstWordIndex = focusDirection == "across" ? (sortedAcrossWords.findIndex(w => w.id == focusedWordId)) : (sortedDownWords.findIndex(w => w.id == focusedWordId));
+                if(!searchSortedWordList(focusDirection, firstWordIndex+1)){
+                    console.debug("not here");
+                    if(!searchSortedWordList(focusDirection == "across" ? "down" : "across", 0)){
+                        console.debug("not there");
+                        if(focusDirection == "across"){
+                            if(focusedCell.y < sortedAcrossWords.length - 1){
+                                focusCellWithCoords(sortedAcrossWords[focusedCell.y+1].startx, sortedAcrossWords[focusedCell.y+1].starty)
+                            } else {
+                                focusCellWithCoords(sortedDownWords[0].startx, sortedDownWords[0].starty);
+                            }
+                        } else {
+                            if(focusedCell.x < sortedDownWords.length - 1){
+                                focusCellWithCoords(sortedDownWords[focusedCell.x+1].startx, sortedDownWords[focusedCell.x+1].starty)
+                            } else {
+                                focusCellWithCoords(sortedAcrossWords[0].startx, sortedAcrossWords[0].starty);
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
 
     const handleCellKeyDown = (event: KeyboardEvent) => {
         console.debug(event.key);
         let next: BasicCell | undefined = undefined;
         if(event.key == "Tab" || event.key == "Enter"){
             /** @todo */
-            // event.preventDefault(); 
-            // if(focusedCell){
-            //     next = findNextCellToFocus(focusDirection, focusedCell.x, focusedCell.y);
-            // }
+            event.preventDefault(); 
+            if(focusedCell){
+                focusNextWord();
+            } else {
+                focusWordByCoords(0, 0);
+            }
             return;
         } else if (event.key == "Backspace") {
             event.preventDefault();
