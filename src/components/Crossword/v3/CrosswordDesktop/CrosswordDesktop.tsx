@@ -1,11 +1,11 @@
 "use client"
 
 import styles from "./CrosswordDesktop.module.css";
-import Word from "../../Crossword/Word/Word";
-import Logo from "../../Logo/Logo";
+import Word from "../../common/Word/Word";
+import Logo from "../../../Logo/Logo";
 import TimerIcon from '@mui/icons-material/Timer';
-import CheckButton from "../../CheckButton/CheckButton";
-import PuzzleSolvedModal from "../../Crossword/PuzzleSolvedModal/PuzzleSolvedModal";
+import CheckButton from "../../../CheckButton/CheckButton";
+import PuzzleSolvedModal from "../../common/PuzzleSolvedModal/PuzzleSolvedModal";
 import { formatTimer } from "@/utils/time";
 import { Button } from "@mui/material";
 import { useCrossword } from "@/context/CrosswordContext";

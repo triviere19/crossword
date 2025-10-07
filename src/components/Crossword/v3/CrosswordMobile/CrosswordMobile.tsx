@@ -2,8 +2,8 @@
 
 import styles from "./CrosswordMobile.module.css";
 import TimerIcon from '@mui/icons-material/Timer';
-import CheckButton from "../../CheckButton/CheckButton";
-import PuzzleSolvedModal from "../../Crossword/PuzzleSolvedModal/PuzzleSolvedModal";
+import CheckButton from "../../../CheckButton/CheckButton";
+import PuzzleSolvedModal from "../../common/PuzzleSolvedModal/PuzzleSolvedModal";
 import { formatTimer } from "@/utils/time";
 import { Button, Typography } from "@mui/material";
 import { useCrossword } from "@/context/CrosswordContext";

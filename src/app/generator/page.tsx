@@ -2,11 +2,11 @@
 
 import { useCrossword } from "@/context/CrosswordContext";
 import styles from "./page.module.css";
-import CrosswordDesktop from "@/components/v3/CrosswordDesktop/CrosswordDesktop";
+import CrosswordDesktop from "@/components/Crossword/v3/CrosswordDesktop/CrosswordDesktop";
 import { useEffect } from "react";
 import { GetCrosswordResult } from "../api/crossword/v2/route";
 import { useMediaQuery, useTheme } from "@mui/material";
-import CrosswordMobile from "@/components/v3/CrosswordMobile/CrosswordMobile";
+import CrosswordMobile from "@/components/Crossword/v3/CrosswordMobile/CrosswordMobile";
 
 export default function Generator() {
 

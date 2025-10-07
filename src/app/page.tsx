@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import CrosswordPuzzle from "@/components/CrosswordPuzzle/CrosswordPuzzle";
+import CrosswordPuzzle from "@/components/Crossword/v1/CrosswordPuzzle/CrosswordPuzzle";
 
 export default function Home() {
   return (

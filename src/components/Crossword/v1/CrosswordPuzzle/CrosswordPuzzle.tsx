@@ -3,13 +3,13 @@
 import styles from "./CrosswordPuzzle.module.css";
 import { CrosswordCell, CrosswordCellPlay, CrosswordCellState, CrosswordLayout, CrosswordWordLayout } from "@/models/Crossword";
 import { KeyboardEvent, useEffect, useRef, useState, MouseEvent } from "react";
-import Cell from "../../Crossword/Cell/Cell";
+import Cell from "../../common/Cell/Cell";
 import { GetCrosswordResult } from "@/app/api/crossword/v1/route";
-import Word from "../../Crossword/Word/Word";
-import Logo from "../../Logo/Logo";
+import Word from "../../common/Word/Word";
+import Logo from "../../../Logo/Logo";
 import TimerIcon from '@mui/icons-material/Timer';
-import CheckButton from "../../CheckButton/CheckButton";
-import PuzzleSolvedModal from "../../Crossword/PuzzleSolvedModal/PuzzleSolvedModal";
+import CheckButton from "../../../CheckButton/CheckButton";
+import PuzzleSolvedModal from "../../common/PuzzleSolvedModal/PuzzleSolvedModal";
 import { formatTimer } from "@/utils/time";
 
 export default function CrosswordPuzzle(){
@@ -21,7 +21,7 @@ export default function CrosswordPuzzle(){
     const [play, setPlay] = useState<CrosswordCellPlay[][]>([]);
 
     useEffect(() => {
-        fetch("/api/crossword/v2").then(async (res) => {
+        fetch("/api/crossword/v1").then(async (res) => {
             const result: GetCrosswordResult = await res.json();
             if(res.ok){
                 if(result.layout){

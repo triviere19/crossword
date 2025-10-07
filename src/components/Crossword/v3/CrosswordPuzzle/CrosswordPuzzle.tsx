@@ -2,7 +2,7 @@
 
 import styles from "./CrosswordPuzzle.module.css";
 import { CSSProperties, useRef } from "react";
-import Cell from "../../Crossword/Cell/Cell";
+import Cell from "../../common/Cell/Cell";
 import { useCrossword } from "@/context/CrosswordContext";
 
 export interface CrosswordPuzzleProps{
