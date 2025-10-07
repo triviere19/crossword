@@ -6,7 +6,7 @@ import CheckButton from "../../../CheckButton/CheckButton";
 import PuzzleSolvedModal from "../../common/PuzzleSolvedModal/PuzzleSolvedModal";
 import { formatTimer } from "@/utils/time";
 import { Button, Typography } from "@mui/material";
-import { useCrossword } from "@/context/CrosswordContext";
+import { useCrossword } from "@/components/Crossword/common/CrosswordContext/CrosswordContext";
 import CrosswordPuzzle from "../CrosswordPuzzle/CrosswordPuzzle";
 import Image from "next/image";
 import { useEffect, useState } from "react";

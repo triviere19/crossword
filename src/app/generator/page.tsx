@@ -1,6 +1,6 @@
 "use client"
 
-import { useCrossword } from "@/context/CrosswordContext";
+import { useCrossword } from "@/components/Crossword/common/CrosswordContext/CrosswordContext";
 import styles from "./page.module.css";
 import CrosswordDesktop from "@/components/Crossword/v3/CrosswordDesktop/CrosswordDesktop";
 import { useEffect } from "react";
