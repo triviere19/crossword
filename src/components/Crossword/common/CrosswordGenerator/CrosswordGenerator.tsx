@@ -8,9 +8,9 @@ import { Alert, Button, Typography, useMediaQuery, useTheme } from "@mui/materia
 import styles from "./CrosswordGenerator.module.css";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useCrossword } from "@/context/CrosswordContext";
-import CrosswordMobile from "../v3/CrosswordMobile/CrosswordMobile";
-import CrosswordDesktop from "../v3/CrosswordDesktop/CrosswordDesktop";
+import { useCrossword } from "@/components/Crossword/common/CrosswordContext/CrosswordContext";
+import CrosswordMobile from "../../v3/CrosswordMobile/CrosswordMobile";
+import CrosswordDesktop from "../../v3/CrosswordDesktop/CrosswordDesktop";
 
 export default function CrosswordGenerator(){
 
@@ -23,7 +23,7 @@ export default function CrosswordGenerator(){
     const [generated, setGenerated] = useState(false);
     const [error, setError] = useState<string|undefined>(undefined);
     const [options, setOptions] = useState(defaultCrosswordGeneratorOptions);
-    
+
     const difficulties = [
         "sack of potatoes",
         "2 year old",

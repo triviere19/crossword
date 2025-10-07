@@ -2,8 +2,8 @@
 
 import styles from "./CrosswordPuzzle.module.css";
 import { CSSProperties, useRef } from "react";
-import Cell from "../../Crossword/Cell/Cell";
-import { useCrossword } from "@/context/CrosswordContext";
+import Cell from "../../common/Cell/Cell";
+import { useCrossword } from "@/components/Crossword/common/CrosswordContext/CrosswordContext";
 
 export interface CrosswordPuzzleProps{
     className?: string,
