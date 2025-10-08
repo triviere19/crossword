@@ -22,6 +22,7 @@ export interface CrosswordContextType {
     handleCellClick: (event: MouseEvent, cell: CrosswordCell) => void,
     handleCellTouchEnd: (event: TouchEvent, cell: CrosswordCell) => void,
     handleCellKeyDown: (event: KeyboardEvent) => void,
+    focusCellWithCoords: (x: number | undefined, y: number | undefined) => void,
 }
 
 export function CrosswordProvider({children}:{children: ReactNode}){
@@ -120,8 +121,20 @@ export function CrosswordProvider({children}:{children: ReactNode}){
     /** @note order of triggers: onBlur, onFocus, onClick */
 
     const handleCellBlur = (event: FocusEvent) => {
-        // event.preventDefault();
-        // setFocusedCell(undefined);
+        const relatedTarget = event.relatedTarget as HTMLElement;
+    
+        // If we're moving to another cell, do nothing (normal behavior)
+        if (relatedTarget?.id?.startsWith('cell(')) {
+            return;
+        }
+        
+        // If clicking outside, refocus the current cell
+        if (focusedCell) {
+            // Use setTimeout to avoid focus conflicts
+            setTimeout(() => {
+                focusCellWithCoords(focusedCell.x, focusedCell.y);
+            }, 0);
+        }
     }
 
     const handleCellFocus = (cell: CrosswordCell) => {
@@ -371,6 +384,7 @@ export function CrosswordProvider({children}:{children: ReactNode}){
             handleCellClick,
             handleCellTouchEnd,
             handleCellKeyDown,
+            focusCellWithCoords,
         }}>
             {children}
         </CrosswordContext.Provider>
@@ -398,6 +412,7 @@ export const defaultCrosswordContextType: CrosswordContextType = {
     handleCellClick: (event: MouseEvent, cell: CrosswordCell) => {},
     handleCellTouchEnd: (event: TouchEvent, cell: CrosswordCell) => {},
     handleCellKeyDown: (event: KeyboardEvent) => {},
+    focusCellWithCoords: (x: number | undefined, y: number | undefined) => {},
 }
 
 const CrosswordContext = createContext<CrosswordContextType>(defaultCrosswordContextType);
