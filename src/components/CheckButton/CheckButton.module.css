@@ -1,7 +1,9 @@
 .button {
     overflow-y: hidden;
     position: relative;
-    border: black solid 1pt inside
+    border: black solid 1pt inside;
+    background-color: black;
+    color: white;
 }
 
 .eyes {
