@@ -3,7 +3,7 @@
 "use client"
 
 import { CrosswordCell, CrosswordCellPlay, CrosswordCellState, CrosswordLayout, CrosswordWordLayout } from "@/models/Crossword";
-import { KeyboardEvent, useEffect, useRef, useState, MouseEvent, createContext, ReactNode, useContext } from "react";
+import { KeyboardEvent, useEffect, useRef, useState, MouseEvent, createContext, ReactNode, useContext, FocusEvent, TouchEvent } from "react";
 
 export interface CrosswordContextType {
     layout: CrosswordLayout|undefined,
@@ -17,9 +17,10 @@ export interface CrosswordContextType {
     setLayout: (set: CrosswordLayout|undefined) => void,
     checkPuzzle: () => void,
     updateCellGuess: (x: number, y:number, value: string) => void,
-    handleCellBlur: () => void,
+    handleCellBlur: (event: FocusEvent) => void,
     handleCellFocus: (cell: CrosswordCell) => void,
     handleCellClick: (event: MouseEvent, cell: CrosswordCell) => void,
+    handleCellTouchEnd: (event: TouchEvent, cell: CrosswordCell) => void,
     handleCellKeyDown: (event: KeyboardEvent) => void,
 }
 
@@ -118,8 +119,9 @@ export function CrosswordProvider({children}:{children: ReactNode}){
 
     /** @note order of triggers: onBlur, onFocus, onClick */
 
-    const handleCellBlur = () => {
-        setFocusedCell(undefined);
+    const handleCellBlur = (event: FocusEvent) => {
+        // event.preventDefault();
+        // setFocusedCell(undefined);
     }
 
     const handleCellFocus = (cell: CrosswordCell) => {
@@ -134,10 +136,8 @@ export function CrosswordProvider({children}:{children: ReactNode}){
         }
         setFocusedCell(cell);
     }
-    
-    /** @note need to use onClick in case cell is already focused */
-    const handleCellClick = (event: MouseEvent, cell: CrosswordCell) => {
-        event.preventDefault();
+
+    const handleCellClickOrTouch = (cell: CrosswordCell) => {
         if(focusedCell?.x == cell.x && focusedCell.y == cell.y){
             if(focusDirection == "across" && cell.downWordId){
                 setFocusDirection("down");
@@ -149,6 +149,17 @@ export function CrosswordProvider({children}:{children: ReactNode}){
             focusCellWithCoords(cell.x, cell.y);
         }
     }
+    
+    /** @note need to use onClick in case cell is already focused */
+    const handleCellClick = (event: MouseEvent, cell: CrosswordCell) => {
+        event.preventDefault();
+        handleCellClickOrTouch(cell);
+    }
+
+    const handleCellTouchEnd = (event: TouchEvent, cell: CrosswordCell) => {
+        event.preventDefault();
+        handleCellClickOrTouch(cell);
+    }
 
     interface BasicCell {
         direction: "across" | "down",
@@ -158,7 +169,7 @@ export function CrosswordProvider({children}:{children: ReactNode}){
 
 
     const focusCellWithCoords = (x: number | undefined, y: number | undefined) => {
-        if(layout && focusedCell && x != undefined && y != undefined){
+        if(layout && x != undefined && y != undefined){
             const rows = layout.grid.length;
             const cols = layout.grid[0].length;
             if(x < 0 || x >= cols){
@@ -331,10 +342,16 @@ export function CrosswordProvider({children}:{children: ReactNode}){
 
     // reset function
     const reset = () => {
-
+        /** @todo */
     }
 
     // ======================================================================================
+
+    useEffect(() => {
+        if(layout && !focusedCell){
+            focusCellWithCoords(0, 0);
+        }
+    }, [layout, focusedCell]);
     
     return (
         <CrosswordContext.Provider value={{
@@ -352,7 +369,8 @@ export function CrosswordProvider({children}:{children: ReactNode}){
             handleCellBlur,
             handleCellFocus,
             handleCellClick,
-            handleCellKeyDown
+            handleCellTouchEnd,
+            handleCellKeyDown,
         }}>
             {children}
         </CrosswordContext.Provider>
@@ -375,9 +393,10 @@ export const defaultCrosswordContextType: CrosswordContextType = {
     setLayout: () => {},
     checkPuzzle: () => {},
     updateCellGuess: (x: number, y:number, value: string) => {},
-    handleCellBlur: () => {},
+    handleCellBlur: (event: FocusEvent) => {},
     handleCellFocus: (cell: CrosswordCell) => {},
     handleCellClick: (event: MouseEvent, cell: CrosswordCell) => {},
+    handleCellTouchEnd: (event: TouchEvent, cell: CrosswordCell) => {},
     handleCellKeyDown: (event: KeyboardEvent) => {},
 }
 
