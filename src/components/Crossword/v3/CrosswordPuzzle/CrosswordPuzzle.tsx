@@ -19,6 +19,7 @@ export default function CrosswordPuzzle(props: CrosswordPuzzleProps){
         handleCellBlur,
         handleCellFocus,
         handleCellClick,
+        handleCellTouchEnd,
         handleCellKeyDown 
     } = useCrossword();
 
@@ -77,6 +78,7 @@ export default function CrosswordPuzzle(props: CrosswordPuzzleProps){
                                 highlighted={Boolean(focusedWordId) && (cell.acrossWordId == focusedWordId || cell.downWordId == focusedWordId)}
                                 onFocus={()=>handleCellFocus(cell)}
                                 onClick={(e)=>handleCellClick(e, cell)}
+                                onTouchEnd={(e)=>handleCellTouchEnd(e, cell)}
                                 onBlur={handleCellBlur}
                                 onKeyDown={handleCellKeyDown}
                                 number={number}

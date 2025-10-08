@@ -1,6 +1,6 @@
 import { CrosswordCellState } from "@/models/Crossword";
 import styles from "./Cell.module.css";
-import { KeyboardEvent, MouseEvent, Ref } from "react";
+import { FocusEvent, KeyboardEvent, MouseEvent, Ref, TouchEvent } from "react";
 
 
 export interface CellProps {
@@ -12,7 +12,8 @@ export interface CellProps {
     onChange?: (set: string) => void,
     onFocus?: () => void,
     onClick?: (event: MouseEvent) => void,
-    onBlur?: () => void,
+    onTouchEnd?: (event: TouchEvent) => void,
+    onBlur?: (event: FocusEvent) => void,
     onKeyDown?: (event: KeyboardEvent) => void,
     highlighted?: boolean,
     ref?: Ref<HTMLInputElement>,
@@ -44,11 +45,15 @@ export default function Cell(props: CellProps){
                 disabled={props.answer == "-"}
                 onChange={(e) => props.onChange?.(e.target.value.charAt(e.target.value.length-1).toUpperCase())}
                 onClick={props.onClick}
+                onTouchEnd={props.onTouchEnd}
                 onFocus={props.onFocus}
                 onBlur={props.onBlur}
                 onKeyDown={props.onKeyDown}
                 ref={props.ref}
                 id={props.id}
+                autoComplete="off"
+                autoCorrect="off" 
+                spellCheck="false"
             />
             <div 
                 className={styles.number}

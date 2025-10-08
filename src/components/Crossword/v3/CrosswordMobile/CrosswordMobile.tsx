@@ -53,12 +53,17 @@ export default function CrosswordMobile(props: CrosswordMobileProps){
             {/* PUZZLE */}
 
             <div className={styles.container}>
-                <CrosswordPuzzle className={styles.puzzle}/>
                 { focusedWord && 
                     <div className={styles.clue}>
                         <Typography>{`${focusedWord?.position}: ${focusedWord?.clue}`}</Typography>
                     </div>
                 }
+                <CrosswordPuzzle 
+                    className={styles.puzzle}
+                    style={{
+                        width: focusedWordId ? "75%" : "100%",
+                    }}
+                />
             </div>
 
             {/* =========================================================================== */}
