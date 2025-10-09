@@ -20,6 +20,7 @@ const dialogues = [
     "interrogating the dictionary...",
     "getting slightly distracted...",
     "demanding answers...",
+    "spending hard earned pennies on your puzzle..."
 ];
 
 export default function PuzzleLoading(){
