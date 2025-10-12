@@ -71,7 +71,7 @@ export default function CrosswordDesktop(props: CrosswordDesktopProps){
                 {/* =========================================================================== */}
 
                 <PuzzleSolvedModal solved={solved} time={timer}>
-                    <Button onClick={()=>window.location.reload()}>New Puzzle</Button>
+                    <Button variant="contained" onClick={()=>window.location.reload()}>New Puzzle</Button>
                 </PuzzleSolvedModal>
 
                 {/* =========================================================================== */}
