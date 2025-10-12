@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { CrosswordLayout } from "@/models/Crossword";
 import { printCrossword, printGrid } from "@/utils/print";
 import { composeRandomGrid, crosswordFromGrid } from "@/utils/grid";
+import { formatTimeString } from "@/utils/time";
 
 export interface GetCrosswordResult {
     layout: CrosswordLayout,
@@ -22,7 +23,7 @@ export async function GET(request: Request) {
             console.log("Randomly Composed Crossword:");
             printGrid(composedGrid);
         }
-        console.log("Took " + (new Date().getTime() - startTime.getTime()) + "ms to generate\n");
+        console.log("Took " + formatTimeString(new Date().getTime() - startTime.getTime()) + " to generate\n");
 
         /** Convert grid to Crossword object */
         const crossword = crosswordFromGrid(composedGrid);

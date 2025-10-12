@@ -5,6 +5,7 @@ import { composeRandomGrid, crosswordFromGrid } from "@/utils/grid";
 import { generateClue } from "@/utils/clues";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth";
+import { formatTimeString } from "@/utils/time";
 
 export interface GetCrosswordResult {
     layout: CrosswordLayout,
@@ -47,7 +48,7 @@ export async function GET(request: Request) {
             word.clue = aiClue;
         }
         
-        console.log("Took " + (new Date().getTime() - startTime.getTime()) + "ms to generate\n");
+        console.log("Took " + formatTimeString(new Date().getTime() - startTime.getTime()) + " to generate\n");
 
         return NextResponse.json({layout: crossword});
     
