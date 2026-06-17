@@ -11,10 +11,11 @@ import Image from "next/image";
 import { useCrossword } from "@/components/Crossword/common/CrosswordContext/CrosswordContext";
 import CrosswordMobile from "../../v3/CrosswordMobile/CrosswordMobile";
 import CrosswordDesktop from "../../v3/CrosswordDesktop/CrosswordDesktop";
+import PuzzleSolvedModal from "../PuzzleSolvedModal/PuzzleSolvedModal";
 
 export default function CrosswordGenerator(){
 
-    const { setLayout, layout } = useCrossword();
+    const { setLayout, solved, timer } = useCrossword();
     const router = useRouter();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -72,7 +73,12 @@ export default function CrosswordGenerator(){
     return (
         <>
             { generated ? 
-                isMobile ? <CrosswordMobile/> : <CrosswordDesktop/> 
+                <>
+                    <PuzzleSolvedModal solved={solved} time={timer}>
+                        <Button variant="contained" onClick={()=>window.location.reload()}>New Puzzle</Button>
+                    </PuzzleSolvedModal>
+                    { isMobile ? <CrosswordMobile/> : <CrosswordDesktop/> }
+                </>
                 :
                 generating ? 
                     <PuzzleLoading/>

@@ -46,3 +46,13 @@ export const defaultCrosswordGeneratorOptions: CrosswordGeneratorOptions = {
   cols: 5,
   difficulty: "5th grader",
 }
+
+
+// ===================================================================================
+// Database
+
+export interface CrosswordEntry {
+  id?: number,
+  dateCreated: Date,
+  puzzle: CrosswordLayout,
+}

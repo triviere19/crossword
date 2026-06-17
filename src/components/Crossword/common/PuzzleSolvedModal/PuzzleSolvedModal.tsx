@@ -18,10 +18,9 @@ export default function PuzzleSolvedModal({children, ...props}: PuzzleSolvedModa
         else if(seconds < 20) return "🥸";
         else if(seconds < 30) return "🤯";
         else if(seconds < 45) return "😳";
-        else if(seconds < 60) return "😤";
-        else if(seconds < 90) return "😎";
-        else if(seconds < 120) return "🫡";
-        else if(seconds < 180) return "😬";
+        else if(seconds < 120) return "😎";
+        else if(seconds < 300) return "🫡";
+        else if(seconds < 600) return "😬";
         else return "🤦‍♂️";
     }
 
@@ -30,11 +29,10 @@ export default function PuzzleSolvedModal({children, ...props}: PuzzleSolvedModa
         else if(seconds < 10) return "Okay try hard...";
         else if(seconds < 20) return "Impossible.";
         else if(seconds < 30) return "Holy Moly!";
-        else if(seconds < 45) return "Fire!";
-        else if(seconds < 60) return "Great Job!";
-        else if(seconds < 90) return "Nice!";
-        else if(seconds < 120) return "Solved!";
-        else if(seconds < 180) return "Finally.";
+        else if(seconds < 60) return "Fire!";
+        else if(seconds < 120) return "Nice!";
+        else if(seconds < 300) return "Solved!";
+        else if(seconds < 600) return "Finally.";
         else return "About Time...";
     }
 
