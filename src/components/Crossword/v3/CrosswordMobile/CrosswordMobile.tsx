@@ -20,7 +20,6 @@ export default function CrosswordMobile(props: CrosswordMobileProps){
 
     const { layout,
         timer,
-        solved,
         focusedWordId,
         checkPuzzle,
     } = useCrossword();
@@ -65,15 +64,6 @@ export default function CrosswordMobile(props: CrosswordMobileProps){
                     }}
                 />
             </div>
-
-            {/* =========================================================================== */}
-
-            <PuzzleSolvedModal solved={solved} time={timer}>
-                <Button variant="contained" onClick={()=>window.location.reload()}>New Puzzle</Button>
-            </PuzzleSolvedModal>
-
-            {/* =========================================================================== */}
-
 
         </>
     );

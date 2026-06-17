@@ -19,7 +19,6 @@ export default function CrosswordDesktop(props: CrosswordDesktopProps){
 
     const { layout,
         timer,
-        solved,
         focusedWordId,
         checkPuzzle,
     } = useCrossword();
@@ -67,14 +66,6 @@ export default function CrosswordDesktop(props: CrosswordDesktopProps){
                         ))}
                     </div>
                 </div>
-
-                {/* =========================================================================== */}
-
-                <PuzzleSolvedModal solved={solved} time={timer}>
-                    <Button variant="contained" onClick={()=>window.location.reload()}>New Puzzle</Button>
-                </PuzzleSolvedModal>
-
-                {/* =========================================================================== */}
 
             </div>
 

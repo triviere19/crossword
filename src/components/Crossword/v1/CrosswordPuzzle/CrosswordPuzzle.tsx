@@ -1,16 +1,16 @@
 "use client"
 
 import styles from "./CrosswordPuzzle.module.css";
-import { CrosswordCell, CrosswordCellPlay, CrosswordCellState, CrosswordLayout, CrosswordWordLayout } from "@/models/Crossword";
+import { CrosswordCell, CrosswordCellPlay, CrosswordCellState, CrosswordLayout } from "@/models/Crossword";
 import { KeyboardEvent, useEffect, useRef, useState, MouseEvent } from "react";
 import Cell from "../../common/Cell/Cell";
-import { GetCrosswordResult } from "@/app/api/crossword/v1/route";
 import Word from "../../common/Word/Word";
 import Logo from "../../../Logo/Logo";
 import TimerIcon from '@mui/icons-material/Timer';
 import CheckButton from "../../../CheckButton/CheckButton";
 import PuzzleSolvedModal from "../../common/PuzzleSolvedModal/PuzzleSolvedModal";
 import { formatTimer } from "@/utils/time";
+import { GetDailyPuzzleResult } from "@/app/api/daily-puzzle/route";
 
 export default function CrosswordPuzzle(){
     
@@ -21,8 +21,8 @@ export default function CrosswordPuzzle(){
     const [play, setPlay] = useState<CrosswordCellPlay[][]>([]);
 
     useEffect(() => {
-        fetch("/api/crossword/v1").then(async (res) => {
-            const result: GetCrosswordResult = await res.json();
+        fetch("/api/daily-puzzle").then(async (res) => {
+            const result: GetDailyPuzzleResult = await res.json();
             if(res.ok){
                 if(result.layout){
                     setLayout(result.layout);
