@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PlayArrow } from "@mui/icons-material";
 import Logo from "@/components/Logo/Logo";
 import Image from "next/image";
+import AboutButton from "@/components/AboutButton/AboutButton";
 
 export default function Home() {
   return (
@@ -22,8 +23,9 @@ export default function Home() {
           <Button 
             component={Link} 
             href="/daily-puzzle"
-            variant="outlined"
+            variant="contained"
           ><PlayArrow/>&nbsp;Play</Button>
+          <AboutButton/>
         </div>
       </main>
       <footer className={styles.footer}>
