@@ -1,3 +1,4 @@
+import Modal from "@/components/common/Modal/Modal";
 import styles from "./PuzzleSolvedModal.module.css";
 import { formatTimer } from "@/utils/time";
 import TimerIcon from '@mui/icons-material/Timer';
@@ -37,22 +38,14 @@ export default function PuzzleSolvedModal({children, ...props}: PuzzleSolvedModa
     }
 
     return (
-        <div 
-            className={styles.overlay}
-            style={{
-                opacity: props.solved ? 1 : 0,
-                pointerEvents: props.solved ? 'all' : 'none',
-            }}
-        >
-            <div className={styles.modal}>
-                <h2>{getKudos(props.time)}</h2>
-                <h1 className={styles.award}>{getAward(props.time)}</h1>
-                <div className={styles.time_box}>
-                    <TimerIcon/>
-                    <h3>{formatTimer(props.time)}</h3>
-                </div>
-                {children}
+        <Modal open={props.solved}>
+            <h2>{getKudos(props.time)}</h2>
+            <h1 className={styles.award}>{getAward(props.time)}</h1>
+            <div className={styles.time_box}>
+                <TimerIcon/>
+                <h3>{formatTimer(props.time)}</h3>
             </div>
-        </div>
+            {children}
+        </Modal>
     );
 }
